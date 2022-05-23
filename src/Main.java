@@ -23,7 +23,7 @@ public class Main {
 	private JTable table;
 	private int total;
 
-	private JFrame frame;
+	private JFrame mainFrame;
 
 	/**
 	 * Launch the application.
@@ -33,7 +33,7 @@ public class Main {
 			public void run() {
 				try {
 					Main window = new Main();
-					window.frame.setVisible(true);
+					window.mainFrame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -52,19 +52,19 @@ public class Main {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setResizable(false);
-		frame.setTitle("MC Lenin's Burger Grill Ordering App");
-		frame.getContentPane().setBackground(Color.YELLOW);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 1050, 600);
-		frame.getContentPane().setLayout(null);
-		frame.getContentPane().setLayout(null);
+		mainFrame = new JFrame();
+		mainFrame.setResizable(false);
+		mainFrame.setTitle("MC Lenin's Burger Grill Ordering App");
+		mainFrame.getContentPane().setBackground(Color.YELLOW);
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainFrame.setBounds(100, 100, 1050, 600);
+		mainFrame.getContentPane().setLayout(null);
+		mainFrame.getContentPane().setLayout(null);
 
 		JPanel pnlHeading = new JPanel();
 		pnlHeading.setBackground(Color.RED);
 		pnlHeading.setBounds(0, 0, 1064, 70);
-		frame.getContentPane().add(pnlHeading);
+		mainFrame.getContentPane().add(pnlHeading);
 		pnlHeading.setLayout(null);
 
 		JLabel txtTitle = new JLabel("MC LENIN's BURGER & PIZZA PLACE");
@@ -88,7 +88,7 @@ public class Main {
 		JPanel pnlMenu = new JPanel();
 		pnlMenu.setBackground(new Color(255, 255, 204));
 		pnlMenu.setBounds(119, 81, 636, 469);
-		frame.getContentPane().add(pnlMenu);
+		mainFrame.getContentPane().add(pnlMenu);
 		pnlMenu.setLayout(new CardLayout(0, 0));
 
 		JPanel menu_1 = new JPanel();
@@ -1310,7 +1310,7 @@ public class Main {
 		panel_1.setForeground(Color.RED);
 		panel_1.setBackground(Color.RED);
 		panel_1.setBounds(0, 70, 110, 481);
-		frame.getContentPane().add(panel_1);
+		mainFrame.getContentPane().add(panel_1);
 		panel_1.setLayout(new GridLayout(4, 1, 0, 0));
 
 		JButton btnMenu_1 = new JButton("Burgers");
@@ -1368,7 +1368,7 @@ public class Main {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setEnabled(false);
 		scrollPane.setBounds(765, 81, 259, 418);
-		frame.getContentPane().add(scrollPane);
+		mainFrame.getContentPane().add(scrollPane);
 
 		table = new JTable();
 		table.setEnabled(true);
@@ -1393,8 +1393,8 @@ public class Main {
 					total += Integer.parseInt(table.getValueAt(i, 1).toString());
 				}
 
-				//checkOut cOut = new checkOut(total);
-				//cOut.setVisible(true);
+				CheckOutFrame cOut = new CheckOutFrame(total);
+				cOut.setVisible(true);
 
 			}
 
@@ -1403,7 +1403,7 @@ public class Main {
 		btnNewButton.setForeground(Color.YELLOW);
 		btnNewButton.setBackground(Color.RED);
 		btnNewButton.setBounds(765, 510, 120, 30);
-		frame.getContentPane().add(btnNewButton);
+		mainFrame.getContentPane().add(btnNewButton);
 
 		JButton btnNewButton_1 = new JButton("VOID");
 		btnNewButton_1.addActionListener(new ActionListener() {
@@ -1418,7 +1418,7 @@ public class Main {
 		btnNewButton_1.setForeground(Color.YELLOW);
 		btnNewButton_1.setBackground(Color.RED);
 		btnNewButton_1.setBounds(904, 510, 120, 30);
-		frame.getContentPane().add(btnNewButton_1);
+		mainFrame.getContentPane().add(btnNewButton_1);
 	}
 
 	public void tempButtonFunction(String var, String price) {
