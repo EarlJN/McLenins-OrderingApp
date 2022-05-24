@@ -1,18 +1,11 @@
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.GridBagLayout;
-import java.awt.ScrollPane;
-import java.awt.GridBagConstraints;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.GridLayout;
@@ -21,9 +14,9 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.print.PrinterException;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextArea;
 
@@ -35,8 +28,8 @@ public class CheckOutFrame extends JFrame {
 	private JTextField txtChange;
 	private int changeAmount;
 	private int payAmount;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField txtCustomer;
+	private JTextField txtAddress;
 
 	public CheckOutFrame(int total, JTable table) {
 
@@ -117,26 +110,31 @@ public class CheckOutFrame extends JFrame {
 		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_1.add(lblNewLabel_4);
 
-		textField = new JTextField();
-		panel_1.add(textField);
-		textField.setColumns(10);
+		txtCustomer = new JTextField();
+		panel_1.add(txtCustomer);
+		txtCustomer.setColumns(10);
 
 		JLabel lblNewLabel_3 = new JLabel("DELIVERY ADDRESS");
 		lblNewLabel_3.setFont(new Font("Arial Black", Font.PLAIN, 11));
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_1.add(lblNewLabel_3);
 
-		textField_1 = new JTextField();
-		panel_1.add(textField_1);
-		textField_1.setColumns(10);
+		txtAddress = new JTextField();
+		panel_1.add(txtAddress);
+		txtAddress.setColumns(10);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(334, 13, 320, 503);
+		contentPane.add(scrollPane_1);
 		
 		JTextArea txtReceipt = new JTextArea();
+		txtReceipt.setLineWrap(true);
+		scrollPane_1.setViewportView(txtReceipt);
 		txtReceipt.setFont(new Font("Monospaced", Font.PLAIN, 14));
 		txtReceipt.setEditable(false);
-		txtReceipt.setBounds(334, 13, 320, 537);
-		contentPane.add(txtReceipt);
 		
 		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(Color.YELLOW);
 		panel_2.setBounds(10, 527, 314, 23);
 		contentPane.add(panel_2);
 		panel_2.setLayout(new GridLayout(1, 3, 0, 0));
@@ -144,10 +142,6 @@ public class CheckOutFrame extends JFrame {
 				JButton btnNewButton = new JButton("CALCULATE");
 				panel_2.add(btnNewButton);
 				btnNewButton.setFont(new Font("Arial", Font.PLAIN, 11));
-						
-						JButton btnNewButton_1 = new JButton("PRINT");
-						btnNewButton_1.setFont(new Font("Arial", Font.PLAIN, 11));
-						panel_2.add(btnNewButton_1);
 				
 						JButton btnCancel = new JButton("CANCEL");
 						panel_2.add(btnCancel);
@@ -159,6 +153,37 @@ public class CheckOutFrame extends JFrame {
 							}
 						});
 						btnCancel.setFont(new Font("Arial", Font.PLAIN, 11));
+						
+						JPanel panel_3 = new JPanel();
+						panel_3.setBackground(Color.YELLOW);
+						panel_3.setBounds(334, 527, 320, 23);
+						contentPane.add(panel_3);
+						panel_3.setLayout(new GridLayout(1, 2, 50, 0));
+						
+						JButton btnNewButton_2 = new JButton("GENERATE");
+						btnNewButton_2.setFont(new Font("Arial", Font.PLAIN, 11));
+						btnNewButton_2.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								update(txtReceipt);
+							}
+						});
+						panel_3.add(btnNewButton_2);
+						
+						JButton btnNewButton_1 = new JButton("PRINT");
+						btnNewButton_1.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								
+								try {
+									txtReceipt.print();
+								} catch (PrinterException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+							}
+					
+						});
+						btnNewButton_1.setFont(new Font("Arial", Font.PLAIN, 11));
+						panel_3.add(btnNewButton_1);
 				btnNewButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 
@@ -174,7 +199,6 @@ public class CheckOutFrame extends JFrame {
 
 						} else {
 							
-							update(txtReceipt);
 							txtChange.setText(String.valueOf(changeAmount));
 						}	
 
@@ -194,18 +218,35 @@ public class CheckOutFrame extends JFrame {
 	
 	public void update(JTextArea txtReceipt) {
 		
-		txtReceipt.setText(txtReceipt.getText() + "========================================\n");
+		txtReceipt.setText("");
+		
+		txtReceipt.setText(txtReceipt.getText() + "=====================================\n");
 		txtReceipt.setText(txtReceipt.getText() + "   MC LENIN'S BURGER AND PIZZA PLACE\n");
-		txtReceipt.setText(txtReceipt.getText() + "========================================\n");
+		txtReceipt.setText(txtReceipt.getText() + "=====================================\n");
 		DefaultTableModel model = (DefaultTableModel) sTable.getModel();
 		
 		for(int i=0; i<sTable.getRowCount(); i++) {
 			String item = sTable.getValueAt(i, 0).toString();
 			String price = sTable.getValueAt(i, 1).toString();
 			
-			txtReceipt.setText(txtReceipt.getText() + " " + item + "  " + price + "  \n");
+			txtReceipt.setText(txtReceipt.getText() + " " + item + "  P " + price + "  \n");
 			
 		}
+		
+		
+		txtReceipt.setText(txtReceipt.getText() + "=====================================\n");
+		txtReceipt.setText(txtReceipt.getText() + "  Total Amount: P " + txtTotal.getText() +"\n");
+		txtReceipt.setText(txtReceipt.getText() + "  Payment Amount: P " + String.valueOf(payAmount) + "\n");
+		txtReceipt.setText(txtReceipt.getText() + "  Change: P " + txtChange.getText() + "\n");
+		txtReceipt.setText(txtReceipt.getText() + "=====================================\n");
+		txtReceipt.setText(txtReceipt.getText() + "=====================================\n");
+		txtReceipt.setText(txtReceipt.getText() + "  Customer Name: " + txtCustomer.getText()+"\n");
+		txtReceipt.setText(txtReceipt.getText() + "  Deliver To: " + txtAddress.getText()+"\n");
+		txtReceipt.setText(txtReceipt.getText() + "=====================================\n");
+		txtReceipt.setText(txtReceipt.getText() + "=====================================\n");
+		txtReceipt.setText(txtReceipt.getText() + "THANK YOU! Come Again!!!!\n");
+		txtReceipt.setText(txtReceipt.getText() + "=====================================\n");
+		
 		
 	}
 }
