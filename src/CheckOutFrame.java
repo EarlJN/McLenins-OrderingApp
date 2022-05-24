@@ -25,6 +25,7 @@ import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JFormattedTextField;
+import javax.swing.JTextArea;
 
 public class CheckOutFrame extends JFrame {
 
@@ -40,7 +41,7 @@ public class CheckOutFrame extends JFrame {
 	public CheckOutFrame(int total, JTable table) {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 350, 600);
+		setBounds(100, 100, 680, 600);
 		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.YELLOW);
@@ -106,43 +107,6 @@ public class CheckOutFrame extends JFrame {
 		txtChange.setColumns(10);
 		txtChange.setText("0");
 
-		JButton btnNewButton = new JButton("PROCEED");
-		btnNewButton.setFont(new Font("Arial", Font.PLAIN, 11));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				payAmount = Integer.parseInt(txtPayAmount.getText());
-				changeAmount = payAmount - total;
-
-				if (payAmount < total) {
-
-					JFrame warn = new JFrame("WARNING");
-					warn.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-					JOptionPane.showMessageDialog(warn, "Not Enough Funds!", "WARNING", JOptionPane.WARNING_MESSAGE);
-
-				} else {
-
-					txtChange.setText(String.valueOf(changeAmount));
-				}
-
-			}
-		});
-		btnNewButton.setBounds(10, 527, 89, 23);
-		contentPane.add(btnNewButton);
-
-		JButton btnCancel = new JButton("CANCEL");
-		btnCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				dispose();
-
-			}
-		});
-		btnCancel.setFont(new Font("Arial", Font.PLAIN, 11));
-		btnCancel.setBounds(235, 527, 89, 23);
-		contentPane.add(btnCancel);
-
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(10, 360, 314, 74);
 		contentPane.add(panel_1);
@@ -165,6 +129,54 @@ public class CheckOutFrame extends JFrame {
 		textField_1 = new JTextField();
 		panel_1.add(textField_1);
 		textField_1.setColumns(10);
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setBounds(334, 13, 320, 537);
+		contentPane.add(textArea);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBounds(10, 527, 314, 23);
+		contentPane.add(panel_2);
+		panel_2.setLayout(new GridLayout(1, 3, 0, 0));
+		
+				JButton btnNewButton = new JButton("CALCULATE");
+				panel_2.add(btnNewButton);
+				btnNewButton.setFont(new Font("Arial", Font.PLAIN, 11));
+						
+						JButton btnNewButton_1 = new JButton("PRINT");
+						btnNewButton_1.setFont(new Font("Arial", Font.PLAIN, 11));
+						panel_2.add(btnNewButton_1);
+				
+						JButton btnCancel = new JButton("CANCEL");
+						panel_2.add(btnCancel);
+						btnCancel.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+
+								dispose();
+
+							}
+						});
+						btnCancel.setFont(new Font("Arial", Font.PLAIN, 11));
+				btnNewButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+
+						payAmount = Integer.parseInt(txtPayAmount.getText());
+						changeAmount = payAmount - total;
+
+						if (payAmount < total) {
+
+							JFrame warn = new JFrame("WARNING");
+							warn.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+							JOptionPane.showMessageDialog(warn, "Not Enough Funds!", "WARNING", JOptionPane.WARNING_MESSAGE);
+
+						} else {
+
+							txtChange.setText(String.valueOf(changeAmount));
+						}
+
+					}
+				});
 	}
 
 	public void setVal(JTextField var, String val) {
