@@ -130,9 +130,11 @@ public class CheckOutFrame extends JFrame {
 		panel_1.add(textField_1);
 		textField_1.setColumns(10);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(334, 13, 320, 537);
-		contentPane.add(textArea);
+		JTextArea txtReceipt = new JTextArea();
+		txtReceipt.setFont(new Font("Monospaced", Font.PLAIN, 14));
+		txtReceipt.setEditable(false);
+		txtReceipt.setBounds(334, 13, 320, 537);
+		contentPane.add(txtReceipt);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBounds(10, 527, 314, 23);
@@ -171,9 +173,10 @@ public class CheckOutFrame extends JFrame {
 							JOptionPane.showMessageDialog(warn, "Not Enough Funds!", "WARNING", JOptionPane.WARNING_MESSAGE);
 
 						} else {
-
+							
+							update(txtReceipt);
 							txtChange.setText(String.valueOf(changeAmount));
-						}
+						}	
 
 					}
 				});
@@ -187,5 +190,22 @@ public class CheckOutFrame extends JFrame {
 
 	public JTextField getTxtTotal() {
 		return txtTotal;
+	}
+	
+	public void update(JTextArea txtReceipt) {
+		
+		txtReceipt.setText(txtReceipt.getText() + "========================================\n");
+		txtReceipt.setText(txtReceipt.getText() + "   MC LENIN'S BURGER AND PIZZA PLACE\n");
+		txtReceipt.setText(txtReceipt.getText() + "========================================\n");
+		DefaultTableModel model = (DefaultTableModel) sTable.getModel();
+		
+		for(int i=0; i<sTable.getRowCount(); i++) {
+			String item = sTable.getValueAt(i, 0).toString();
+			String price = sTable.getValueAt(i, 1).toString();
+			
+			txtReceipt.setText(txtReceipt.getText() + " " + item + "  " + price + "  \n");
+			
+		}
+		
 	}
 }
