@@ -1371,7 +1371,7 @@ public class Main {
 		mainFrame.getContentPane().add(scrollPane);
 
 		table = new JTable();
-		table.setEnabled(true);
+		table.setEnabled(false);
 		table.setRowSelectionAllowed(false);
 		table.setBorder(null);
 		table.setShowGrid(false);
@@ -1393,7 +1393,7 @@ public class Main {
 					total += Integer.parseInt(table.getValueAt(i, 1).toString());
 				}
 
-				CheckOutFrame cOut = new CheckOutFrame(total);
+				CheckOutFrame cOut = new CheckOutFrame(total, table);
 				cOut.setVisible(true);
 
 			}
